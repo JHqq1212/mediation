@@ -1,5 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>下頜線的十二週</title>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>下頜線的十二週</title><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;900&display=swap">
 <style>
@@ -164,6 +163,7 @@
   .status.warn { color: var(--verm); }
   .endmark { display: inline-block; width: .6em; height: .6em; background: var(--verm); margin-left: .4em; }
 </style>
+</head><body>
 
 <div class="wrap">
   <p class="kicker">身體日誌 Body Journal</p>
@@ -171,7 +171,7 @@
   <p class="en">Twelve Weeks of Recomposition</p>
   <p class="lede">六項每日習慣，十二週。這一頁記錄的是行為，不是外貌——因為行為是唯一能直接控制的東西。勾選後自動儲存，完成率即時計算。</p>
 
-  <p class="status" id="status">正在連接紀錄……</p>
+  <p class="status" id="status">正在讀取紀錄……</p>
 
   <dl class="stats">
     <div class="stat"><dt>總完成率</dt><dd class="tnum"><span id="s-rate">0</span>%</dd></div>
@@ -198,7 +198,9 @@
     </table>
   </div>
 
-  <p class="foot">本頁為一般健康與健身教育用途，並非個別醫療建議。若對外貌的想法開始佔據大量時間、引致明顯痛苦或迴避社交，那已超出健身計劃能處理的範圍，值得尋求專業協助。<span class="endmark"></span></p>
+  <p class="foot">紀錄只儲存在你目前使用的裝置及瀏覽器之中，不會上載到任何伺服器，其他人亦無法看到。換用其他裝置或瀏覽器、使用私密瀏覽模式，或清除瀏覽器資料，都會令紀錄無法讀取或被刪除。</p>
+
+  <p class="foot" style="margin-top:14px">本頁為一般健康與健身教育用途，並非個別醫療建議。若對外貌的想法開始佔據大量時間、引致明顯痛苦或迴避社交，那已超出健身計劃能處理的範圍，值得尋求專業協助。<span class="endmark"></span></p>
 </div>
 
 <script>
@@ -211,6 +213,7 @@
   var WEEKS = 12, DAYS = 7, NH = HABITS.length;
   var TOTAL = WEEKS * DAYS * NH;          // 504
   var DAY_TARGET = 4;                      // ticks that make a day count
+  var STORAGE_KEY = "jawline-12weeks-v1";
 
   // ---- state -------------------------------------------------------------
   function blankWeek() {
@@ -221,10 +224,8 @@
   var state = [];
   for (var w = 0; w < WEEKS; w++) state.push(blankWeek());
 
-  var db = null;
-  var dirty = {};        // week index -> true while a local edit is unsaved
-  var pending = {};      // week index -> timer
-  var saving = {};       // week index -> promise chain guard
+  var storageOK = false;
+  var saveTimer = null;
 
   // ---- dom ---------------------------------------------------------------
   var boxes = [];        // [w][d][h] -> button
@@ -256,7 +257,7 @@
         var di = document.createElement("input");
         di.type = "date"; di.id = "start-" + w;
         di.addEventListener("change", function () {
-          state[w].start = di.value; touch(w);
+          state[w].start = di.value; touch();
         });
         lab.appendChild(di);
         startEls[w] = di;
@@ -292,7 +293,7 @@
                 b.innerHTML = CHECK;
                 b.addEventListener("click", function () {
                   state[w].days[d][h] = state[w].days[d][h] ? 0 : 1;
-                  paintWeek(w); paintTotals(); touch(w);
+                  paintWeek(w); paintTotals(); touch();
                 });
                 cell.appendChild(b);
                 boxes[w][d][h] = b;
@@ -317,7 +318,7 @@
     i.addEventListener("input", function () {
       var v = i.value === "" ? null : Number(i.value);
       state[w][key] = (v == null || isNaN(v)) ? null : v;
-      paintTotals(); touch(w);
+      paintTotals(); touch();
     });
     return i;
   }
@@ -349,7 +350,7 @@
         pb.addEventListener("click", function () {
           state[w].photo = state[w].photo ? 0 : 1;
           pb.setAttribute("aria-checked", state[w].photo ? "true" : "false");
-          touch(w);
+          touch();
         });
         tdp.appendChild(pb); tr.appendChild(tdp); row.photo = pb;
 
@@ -431,46 +432,42 @@
     paintTotals();
   }
 
-  // ---- persistence -------------------------------------------------------
+  // ---- persistence (this device's browser only) --------------------------
   function setStatus(msg, warn) {
     var s = document.getElementById("status");
     s.textContent = msg;
     s.classList.toggle("warn", !!warn);
   }
 
-  function touch(w) {
-    if (!db) return;
-    dirty[w] = true;
-    clearTimeout(pending[w]);
-    pending[w] = setTimeout(function () { save(w); }, 500);
+  function testStorage() {
+    try {
+      var k = STORAGE_KEY + "-test";
+      window.localStorage.setItem(k, "1");
+      window.localStorage.removeItem(k);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  function save(w) {
-    if (!db || saving[w]) { if (saving[w]) pending[w] = setTimeout(function () { save(w); }, 300); return; }
-    var st = state[w];
-    var body = {
-      week: w + 1,
-      days: st.days.map(function (r) { return r.slice(); }),
-      start: st.start || "",
-      sessions: st.sessions, steps: st.steps, waist: st.waist, weight: st.weight,
-      photo: st.photo ? 1 : 0
-    };
-    saving[w] = true;
-    db.doc("log/w" + (w + 1)).set(body).then(function () {
-      saving[w] = false; dirty[w] = false; setStatus("紀錄已儲存。");
-    }).catch(function (e) {
-      saving[w] = false;
-      setStatus(e && e.code === "invalid_argument"
-        ? "無法寫入：此頁對你為唯讀，改動不會保留。"
-        : "暫時無法儲存，請稍後再試。", true);
+  function serialize() {
+    return JSON.stringify({
+      version: 1,
+      savedAt: new Date().toISOString(),
+      weeks: state.map(function (st, i) {
+        return {
+          week: i + 1,
+          days: st.days.map(function (r) { return r.slice(); }),
+          start: st.start || "",
+          sessions: st.sessions, steps: st.steps, waist: st.waist, weight: st.weight,
+          photo: st.photo ? 1 : 0
+        };
+      })
     });
   }
 
-  function applyDoc(id, data) {
-    var m = /^w(\d+)$/.exec(id);
-    if (!m) return;
-    var w = Number(m[1]) - 1;
-    if (w < 0 || w >= WEEKS || dirty[w]) return;
+  function applyWeek(w, data) {
+    if (!data || w < 0 || w >= WEEKS) return;
     var st = state[w];
     if (Array.isArray(data.days)) {
       for (var d = 0; d < DAYS; d++) {
@@ -485,31 +482,72 @@
     st.photo = data.photo ? 1 : 0;
   }
 
+  function load() {
+    var raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    var data = JSON.parse(raw);
+    if (!data || !Array.isArray(data.weeks)) return false;
+    data.weeks.forEach(function (wk, i) {
+      var w = (wk && typeof wk.week === "number") ? wk.week - 1 : i;
+      applyWeek(w, wk);
+    });
+    return true;
+  }
+
+  function save() {
+    saveTimer = null;
+    if (!storageOK) return;
+    try {
+      window.localStorage.setItem(STORAGE_KEY, serialize());
+      setStatus("紀錄已儲存於此裝置的瀏覽器。");
+    } catch (e) {
+      setStatus("無法儲存：瀏覽器儲存空間可能已滿或受限制，改動只保留在這次瀏覽中。", true);
+    }
+  }
+
+  function touch() {
+    if (!storageOK) return;
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(save, 300);
+  }
+
+  // Flush any pending save when the page is being closed or hidden.
+  function flush() { if (saveTimer) { clearTimeout(saveTimer); save(); } }
+  window.addEventListener("pagehide", flush);
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") flush();
+  });
+
+  // Keep several open tabs of this page in step with each other.
+  window.addEventListener("storage", function (e) {
+    if (e.key !== STORAGE_KEY) return;
+    try {
+      for (var w = 0; w < WEEKS; w++) state[w] = blankWeek();
+      load();
+      paintAll();
+    } catch (err) { /* ignore malformed data from another tab */ }
+  });
+
   // ---- boot --------------------------------------------------------------
   buildWeeks();
   buildSummary();
   buildSpark();
-  paintAll();
 
-  if (window.claude && typeof window.claude.use === "function") {
-    window.claude.use("db").then(function (store) {
-      if (!store) { setStatus("未連接紀錄，改動只保留在這次瀏覽中。", true); return; }
-      db = store;
-      setStatus("紀錄已連接，勾選即時儲存。");
-      db.collection("log").onSnapshot(function (snap) {
-        snap.docs.forEach(function (doc) {
-          var data = doc.data();
-          if (data) applyDoc(doc.id, data);
-        });
-        paintAll();
-      }, function () {
-        setStatus("紀錄連線中斷，請重新載入本頁。", true);
-      });
-    }).catch(function () {
-      setStatus("未連接紀錄，改動只保留在這次瀏覽中。", true);
-    });
+  storageOK = testStorage();
+  if (!storageOK) {
+    paintAll();
+    setStatus("此瀏覽器不允許儲存資料（例如處於私密瀏覽模式），改動只保留在這次瀏覽中。", true);
   } else {
-    setStatus("未連接紀錄，改動只保留在這次瀏覽中。", true);
+    var had = false;
+    try {
+      had = load();
+    } catch (e) {
+      setStatus("舊紀錄無法讀取，已改用空白紀錄。", true);
+    }
+    paintAll();
+    if (had) setStatus("已讀取此裝置上的紀錄，勾選後自動儲存。");
+    else if (!document.getElementById("status").classList.contains("warn"))
+      setStatus("紀錄會儲存在此裝置的瀏覽器中，勾選後自動儲存。");
   }
 })();
 </script>
