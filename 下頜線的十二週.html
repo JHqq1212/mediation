@@ -1,0 +1,517 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>下頜線的十二週</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;900&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #F5F1E8;
+    --surface: #FBF8F1;
+    --ink: #30343A;
+    --muted: #86888A;
+    --hair: #D8D2C4;
+    --verm: #C8332B;
+    --verm-tint: #F0DAD1;
+    --verm-soft: #E7B8AF;
+    --serif: "Noto Serif TC", "Songti TC", serif;
+    --sans: "Noto Sans TC", "PingFang TC", system-ui, sans-serif;
+    --latin: "Lora", Georgia, serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #1A1C1F;
+      --surface: #212428;
+      --ink: #E7E2D6;
+      --muted: #91938F;
+      --hair: #34383D;
+      --verm: #E2604F;
+      --verm-tint: #3A2320;
+      --verm-soft: #6B3830;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #1A1C1F;
+    --surface: #212428;
+    --ink: #E7E2D6;
+    --muted: #91938F;
+    --hair: #34383D;
+    --verm: #E2604F;
+    --verm-tint: #3A2320;
+    --verm-soft: #6B3830;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.65;
+    -webkit-text-size-adjust: 100%;
+  }
+  .wrap {
+    max-width: 920px;
+    margin: 0 auto;
+    padding-inline: 16px;
+    padding-block: 40px 72px;
+  }
+  .tnum { font-variant-numeric: tabular-nums; }
+
+  /* ---------- masthead ---------- */
+  .kicker {
+    font-family: var(--sans); font-size: 11px; font-weight: 500;
+    letter-spacing: .28em; text-transform: uppercase; color: var(--muted);
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 900;
+    font-size: clamp(30px, 7vw, 46px); line-height: 1.18;
+    letter-spacing: .04em; margin: 10px 0 4px; text-wrap: balance;
+  }
+  .en {
+    font-family: var(--latin); font-style: italic; font-size: 15px;
+    color: var(--muted); margin-bottom: 22px;
+  }
+  .lede {
+    max-width: 62ch; font-size: 15px; color: var(--ink);
+    border-top: 1px solid var(--hair); padding-top: 18px; margin: 0 0 30px;
+  }
+
+  /* ---------- summary ---------- */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+           background: var(--hair); border: 1px solid var(--hair); margin-bottom: 26px; }
+  .stat { background: var(--surface); padding: 14px 12px; }
+  .stat dt { font-size: 11px; letter-spacing: .12em; color: var(--muted); margin: 0 0 6px; }
+  .stat dd { margin: 0; font-family: var(--serif); font-weight: 600;
+             font-size: clamp(20px, 5vw, 27px); line-height: 1.1; }
+  .stat dd small { font-family: var(--sans); font-weight: 400; font-size: 12px; color: var(--muted); }
+  @media (max-width: 620px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .spark { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+           align-items: end; height: 62px; margin-bottom: 8px; }
+  .spark div { background: var(--verm-tint); border-bottom: 2px solid var(--verm);
+               min-height: 3px; transition: height .25s ease; }
+  .spark-axis { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px;
+                font-size: 10px; color: var(--muted); text-align: center; margin-bottom: 34px; }
+
+  /* ---------- week cards ---------- */
+  h2.sec {
+    font-family: var(--serif); font-weight: 600; font-size: 19px;
+    letter-spacing: .06em; margin: 0 0 4px;
+    border-top: 2px solid var(--verm); padding-top: 12px;
+  }
+  .sec-note { font-size: 13px; color: var(--muted); margin: 0 0 22px; max-width: 58ch; }
+
+  .week { border: 1px solid var(--hair); background: var(--surface); margin-bottom: 14px; }
+  .whead {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px;
+    padding: 9px 12px; background: var(--verm-tint); border-bottom: 1px solid var(--hair);
+  }
+  .wno { font-family: var(--serif); font-weight: 600; font-size: 15px; letter-spacing: .06em; }
+  .whead label { font-size: 12px; color: var(--muted); }
+  .whead input[type="date"] {
+    font: inherit; font-size: 12px; background: transparent; color: var(--ink);
+    border: 0; border-bottom: 1px solid var(--verm-soft); padding: 1px 2px; max-width: 148px;
+  }
+  .wrate { margin-left: auto; font-size: 12px; color: var(--ink); }
+  .wrate b { font-family: var(--serif); font-size: 15px; }
+
+  .grid { display: grid; grid-template-columns: minmax(92px, 1.5fr) repeat(7, minmax(0, 1fr)) 36px;
+          align-items: stretch; }
+  .grid > * { border-bottom: 1px solid var(--hair); }
+  .grid > .r-last { border-bottom: 0; }
+  .gh { font-size: 11px; color: var(--muted); text-align: center; padding: 6px 0; letter-spacing: .06em; }
+  .gh.lbl { text-align: left; padding-left: 12px; }
+  .hab { font-size: 12.5px; padding: 0 6px 0 12px; display: flex; align-items: center; line-height: 1.3; }
+  .cell { display: flex; align-items: center; justify-content: center; padding: 5px 0; }
+  .sub { display: flex; align-items: center; justify-content: center;
+         font-size: 12px; color: var(--muted); }
+  .sub.full { color: var(--verm); font-weight: 500; }
+
+  button.box {
+    width: 22px; height: 22px; border-radius: 3px; padding: 0; cursor: pointer;
+    background: var(--paper); border: 1px solid var(--hair);
+    display: flex; align-items: center; justify-content: center;
+    transition: background .12s ease, border-color .12s ease;
+  }
+  button.box:hover { border-color: var(--verm-soft); }
+  button.box:focus-visible { outline: 2px solid var(--verm); outline-offset: 2px; }
+  button.box[aria-checked="true"] { background: var(--verm); border-color: var(--verm); }
+  button.box svg { width: 13px; height: 13px; opacity: 0; }
+  button.box[aria-checked="true"] svg { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  /* ---------- summary table ---------- */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--hair); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; }
+  th, td { border-bottom: 1px solid var(--hair); padding: 7px 10px; text-align: left; }
+  thead th { font-size: 11px; font-weight: 500; letter-spacing: .1em; color: var(--muted);
+             background: var(--verm-tint); border-bottom: 1px solid var(--hair); white-space: nowrap; }
+  tbody th { font-family: var(--serif); font-weight: 400; font-size: 13px; white-space: nowrap; }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: 0; }
+  td input[type="number"] {
+    font: inherit; font-size: 13px; width: 100%; min-width: 62px; background: transparent;
+    color: var(--ink); border: 0; border-bottom: 1px solid var(--hair); padding: 2px 0;
+    font-variant-numeric: tabular-nums;
+  }
+  td input[type="number"]:focus { outline: none; border-bottom-color: var(--verm); }
+  td.rate { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted); }
+  td.rate.good { color: var(--verm); }
+
+  .foot { margin-top: 34px; border-top: 1px solid var(--hair); padding-top: 16px;
+          font-size: 12.5px; color: var(--muted); max-width: 62ch; }
+  .status { font-size: 12px; color: var(--muted); margin: 0 0 22px; }
+  .status.warn { color: var(--verm); }
+  .endmark { display: inline-block; width: .6em; height: .6em; background: var(--verm); margin-left: .4em; }
+</style>
+
+<div class="wrap">
+  <p class="kicker">身體日誌 Body Journal</p>
+  <h1>下頜線的十二週</h1>
+  <p class="en">Twelve Weeks of Recomposition</p>
+  <p class="lede">六項每日習慣，十二週。這一頁記錄的是行為，不是外貌——因為行為是唯一能直接控制的東西。勾選後自動儲存，完成率即時計算。</p>
+
+  <p class="status" id="status">正在連接紀錄……</p>
+
+  <dl class="stats">
+    <div class="stat"><dt>總完成率</dt><dd class="tnum"><span id="s-rate">0</span>%</dd></div>
+    <div class="stat"><dt>達標日數</dt><dd class="tnum"><span id="s-days">0</span> <small>／ 84 日</small></dd></div>
+    <div class="stat"><dt>最長連續</dt><dd class="tnum"><span id="s-streak">0</span> <small>日</small></dd></div>
+    <div class="stat"><dt>訓練節數</dt><dd class="tnum"><span id="s-sess">0</span> <small>節</small></dd></div>
+  </dl>
+
+  <div class="spark" id="spark" aria-hidden="true"></div>
+  <div class="spark-axis" id="spark-axis"></div>
+
+  <h2 class="sec">每日打勾</h2>
+  <p class="sec-note">每週滿分四十二格。單日勾滿四項或以上，即計為一個達標日；不必追求滿分，七成以上已足以推動改變。</p>
+  <div id="weeks"></div>
+
+  <h2 class="sec" style="margin-top:38px">每週彙總</h2>
+  <p class="sec-note">腰圍量肚臍水平，體重填該週的平均而非單日數字。照片每二至四週一次，同一光線、同一角度、同一姿勢，早上空腹，正面與側面各一張。</p>
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>週次</th><th>訓練節數</th><th>平均步數</th><th>腰圍 cm</th><th>體重 kg</th><th>相片</th><th>完成率</th></tr>
+      </thead>
+      <tbody id="sumbody"></tbody>
+    </table>
+  </div>
+
+  <p class="foot">本頁為一般健康與健身教育用途，並非個別醫療建議。若對外貌的想法開始佔據大量時間、引致明顯痛苦或迴避社交，那已超出健身計劃能處理的範圍，值得尋求專業協助。<span class="endmark"></span></p>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var HABITS = ["姿勢常規 5 分鐘", "蛋白質達標", "步數 8,000 以上",
+                "飲品走甜或無糖", "蔬菜兩份以上", "睡眠 7 小時以上"];
+  var DAYNAMES = ["一", "二", "三", "四", "五", "六", "日"];
+  var WEEKS = 12, DAYS = 7, NH = HABITS.length;
+  var TOTAL = WEEKS * DAYS * NH;          // 504
+  var DAY_TARGET = 4;                      // ticks that make a day count
+
+  // ---- state -------------------------------------------------------------
+  function blankWeek() {
+    var d = [];
+    for (var i = 0; i < DAYS; i++) d.push([0, 0, 0, 0, 0, 0]);
+    return { days: d, start: "", sessions: null, steps: null, waist: null, weight: null, photo: 0 };
+  }
+  var state = [];
+  for (var w = 0; w < WEEKS; w++) state.push(blankWeek());
+
+  var db = null;
+  var dirty = {};        // week index -> true while a local edit is unsaved
+  var pending = {};      // week index -> timer
+  var saving = {};       // week index -> promise chain guard
+
+  // ---- dom ---------------------------------------------------------------
+  var boxes = [];        // [w][d][h] -> button
+  var subs = [];         // [w][h] -> span
+  var rateEls = [], startEls = [], sparkEls = [];
+  var sumInputs = [];    // [w] -> {sessions, steps, waist, weight, photo, rate}
+
+  var CHECK = '<svg viewBox="0 0 16 16" aria-hidden="true">' +
+    '<path d="M3 8.4l3.2 3.2L13 4.8" fill="none" stroke="#F5F1E8" ' +
+    'stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function buildWeeks() {
+    var host = document.getElementById("weeks");
+    for (var w = 0; w < WEEKS; w++) {
+      (function (w) {
+        var card = el("div", "week");
+
+        var head = el("div", "whead");
+        head.appendChild(el("span", "wno", "第 " + (w + 1) + " 週"));
+        var lab = el("label", null, "起始日期 ");
+        lab.setAttribute("for", "start-" + w);
+        var di = document.createElement("input");
+        di.type = "date"; di.id = "start-" + w;
+        di.addEventListener("change", function () {
+          state[w].start = di.value; touch(w);
+        });
+        lab.appendChild(di);
+        startEls[w] = di;
+        head.appendChild(lab);
+        var rate = el("span", "wrate");
+        rate.innerHTML = '<b class="tnum">0</b> ／ 42';
+        rateEls[w] = rate.querySelector("b");
+        head.appendChild(rate);
+        card.appendChild(head);
+
+        var grid = el("div", "grid");
+        grid.appendChild(el("div", "gh lbl", "每日習慣"));
+        for (var d = 0; d < DAYS; d++) grid.appendChild(el("div", "gh", DAYNAMES[d]));
+        grid.appendChild(el("div", "gh", "小計"));
+
+        boxes[w] = [];
+        for (var dd = 0; dd < DAYS; dd++) boxes[w][dd] = [];
+        subs[w] = [];
+
+        for (var h = 0; h < NH; h++) {
+          (function (h) {
+            var last = (h === NH - 1) ? " r-last" : "";
+            grid.appendChild(el("div", "hab" + last, HABITS[h]));
+            for (var d = 0; d < DAYS; d++) {
+              (function (d) {
+                var cell = el("div", "cell" + last);
+                var b = document.createElement("button");
+                b.type = "button"; b.className = "box";
+                b.setAttribute("role", "checkbox");
+                b.setAttribute("aria-checked", "false");
+                b.setAttribute("aria-label",
+                  "第 " + (w + 1) + " 週 星期" + DAYNAMES[d] + " " + HABITS[h]);
+                b.innerHTML = CHECK;
+                b.addEventListener("click", function () {
+                  state[w].days[d][h] = state[w].days[d][h] ? 0 : 1;
+                  paintWeek(w); paintTotals(); touch(w);
+                });
+                cell.appendChild(b);
+                boxes[w][d][h] = b;
+                grid.appendChild(cell);
+              })(d);
+            }
+            var s = el("div", "sub" + last, "0");
+            subs[w][h] = s;
+            grid.appendChild(s);
+          })(h);
+        }
+        card.appendChild(grid);
+        host.appendChild(card);
+      })(w);
+    }
+  }
+
+  function numInput(w, key, step, min, max) {
+    var i = document.createElement("input");
+    i.type = "number"; i.id = key + "-" + w;
+    i.step = step; if (min != null) i.min = min; if (max != null) i.max = max;
+    i.addEventListener("input", function () {
+      var v = i.value === "" ? null : Number(i.value);
+      state[w][key] = (v == null || isNaN(v)) ? null : v;
+      paintTotals(); touch(w);
+    });
+    return i;
+  }
+
+  function buildSummary() {
+    var tb = document.getElementById("sumbody");
+    for (var w = 0; w < WEEKS; w++) {
+      (function (w) {
+        var tr = document.createElement("tr");
+        var th = document.createElement("th");
+        th.scope = "row"; th.textContent = "第 " + (w + 1) + " 週";
+        tr.appendChild(th);
+
+        var row = { };
+        ["sessions", "steps", "waist", "weight"].forEach(function (k) {
+          var td = document.createElement("td");
+          var inp = numInput(w, k,
+            k === "steps" ? "100" : (k === "sessions" ? "1" : "0.1"), "0",
+            k === "sessions" ? "14" : null);
+          td.appendChild(inp); tr.appendChild(td); row[k] = inp;
+        });
+
+        var tdp = document.createElement("td");
+        var pb = document.createElement("button");
+        pb.type = "button"; pb.className = "box";
+        pb.setAttribute("role", "checkbox"); pb.setAttribute("aria-checked", "false");
+        pb.setAttribute("aria-label", "第 " + (w + 1) + " 週 已拍照片");
+        pb.innerHTML = CHECK;
+        pb.addEventListener("click", function () {
+          state[w].photo = state[w].photo ? 0 : 1;
+          pb.setAttribute("aria-checked", state[w].photo ? "true" : "false");
+          touch(w);
+        });
+        tdp.appendChild(pb); tr.appendChild(tdp); row.photo = pb;
+
+        var tdr = document.createElement("td");
+        tdr.className = "rate tnum"; tdr.textContent = "0%";
+        tr.appendChild(tdr); row.rate = tdr;
+
+        sumInputs[w] = row;
+        tb.appendChild(tr);
+      })(w);
+    }
+  }
+
+  function buildSpark() {
+    var s = document.getElementById("spark"), a = document.getElementById("spark-axis");
+    for (var w = 0; w < WEEKS; w++) {
+      var bar = el("div"); bar.style.height = "3px";
+      s.appendChild(bar); sparkEls[w] = bar;
+      a.appendChild(el("span", null, String(w + 1)));
+    }
+  }
+
+  // ---- painting ----------------------------------------------------------
+  function weekTicks(w) {
+    var n = 0, st = state[w];
+    for (var d = 0; d < DAYS; d++) for (var h = 0; h < NH; h++) n += st.days[d][h] ? 1 : 0;
+    return n;
+  }
+
+  function paintWeek(w) {
+    var st = state[w];
+    for (var h = 0; h < NH; h++) {
+      var rowN = 0;
+      for (var d = 0; d < DAYS; d++) {
+        var on = !!st.days[d][h];
+        boxes[w][d][h].setAttribute("aria-checked", on ? "true" : "false");
+        if (on) rowN++;
+      }
+      subs[w][h].textContent = String(rowN);
+      subs[w][h].classList.toggle("full", rowN === DAYS);
+    }
+    var tk = weekTicks(w);
+    rateEls[w].textContent = String(tk);
+    sparkEls[w].style.height = Math.max(3, Math.round(tk / 42 * 62)) + "px";
+    var pct = Math.round(tk / 42 * 100);
+    sumInputs[w].rate.textContent = pct + "%";
+    sumInputs[w].rate.classList.toggle("good", pct >= 70);
+  }
+
+  function paintFields(w) {
+    var st = state[w];
+    startEls[w].value = st.start || "";
+    ["sessions", "steps", "waist", "weight"].forEach(function (k) {
+      sumInputs[w][k].value = (st[k] == null ? "" : st[k]);
+    });
+    sumInputs[w].photo.setAttribute("aria-checked", st.photo ? "true" : "false");
+  }
+
+  function paintTotals() {
+    var ticks = 0, goodDays = 0, streak = 0, best = 0, sessions = 0;
+    for (var w = 0; w < WEEKS; w++) {
+      for (var d = 0; d < DAYS; d++) {
+        var n = 0;
+        for (var h = 0; h < NH; h++) n += state[w].days[d][h] ? 1 : 0;
+        ticks += n;
+        if (n >= DAY_TARGET) { goodDays++; streak++; if (streak > best) best = streak; }
+        else streak = 0;
+      }
+      if (typeof state[w].sessions === "number") sessions += state[w].sessions;
+    }
+    document.getElementById("s-rate").textContent = Math.round(ticks / TOTAL * 100);
+    document.getElementById("s-days").textContent = goodDays;
+    document.getElementById("s-streak").textContent = best;
+    document.getElementById("s-sess").textContent = sessions;
+  }
+
+  function paintAll() {
+    for (var w = 0; w < WEEKS; w++) { paintWeek(w); paintFields(w); }
+    paintTotals();
+  }
+
+  // ---- persistence -------------------------------------------------------
+  function setStatus(msg, warn) {
+    var s = document.getElementById("status");
+    s.textContent = msg;
+    s.classList.toggle("warn", !!warn);
+  }
+
+  function touch(w) {
+    if (!db) return;
+    dirty[w] = true;
+    clearTimeout(pending[w]);
+    pending[w] = setTimeout(function () { save(w); }, 500);
+  }
+
+  function save(w) {
+    if (!db || saving[w]) { if (saving[w]) pending[w] = setTimeout(function () { save(w); }, 300); return; }
+    var st = state[w];
+    var body = {
+      week: w + 1,
+      days: st.days.map(function (r) { return r.slice(); }),
+      start: st.start || "",
+      sessions: st.sessions, steps: st.steps, waist: st.waist, weight: st.weight,
+      photo: st.photo ? 1 : 0
+    };
+    saving[w] = true;
+    db.doc("log/w" + (w + 1)).set(body).then(function () {
+      saving[w] = false; dirty[w] = false; setStatus("紀錄已儲存。");
+    }).catch(function (e) {
+      saving[w] = false;
+      setStatus(e && e.code === "invalid_argument"
+        ? "無法寫入：此頁對你為唯讀，改動不會保留。"
+        : "暫時無法儲存，請稍後再試。", true);
+    });
+  }
+
+  function applyDoc(id, data) {
+    var m = /^w(\d+)$/.exec(id);
+    if (!m) return;
+    var w = Number(m[1]) - 1;
+    if (w < 0 || w >= WEEKS || dirty[w]) return;
+    var st = state[w];
+    if (Array.isArray(data.days)) {
+      for (var d = 0; d < DAYS; d++) {
+        var row = data.days[d];
+        for (var h = 0; h < NH; h++) st.days[d][h] = (row && row[h]) ? 1 : 0;
+      }
+    }
+    st.start = typeof data.start === "string" ? data.start : "";
+    ["sessions", "steps", "waist", "weight"].forEach(function (k) {
+      st[k] = typeof data[k] === "number" ? data[k] : null;
+    });
+    st.photo = data.photo ? 1 : 0;
+  }
+
+  // ---- boot --------------------------------------------------------------
+  buildWeeks();
+  buildSummary();
+  buildSpark();
+  paintAll();
+
+  if (window.claude && typeof window.claude.use === "function") {
+    window.claude.use("db").then(function (store) {
+      if (!store) { setStatus("未連接紀錄，改動只保留在這次瀏覽中。", true); return; }
+      db = store;
+      setStatus("紀錄已連接，勾選即時儲存。");
+      db.collection("log").onSnapshot(function (snap) {
+        snap.docs.forEach(function (doc) {
+          var data = doc.data();
+          if (data) applyDoc(doc.id, data);
+        });
+        paintAll();
+      }, function () {
+        setStatus("紀錄連線中斷，請重新載入本頁。", true);
+      });
+    }).catch(function () {
+      setStatus("未連接紀錄，改動只保留在這次瀏覽中。", true);
+    });
+  } else {
+    setStatus("未連接紀錄，改動只保留在這次瀏覽中。", true);
+  }
+})();
+</script>
+
+</body></html>
